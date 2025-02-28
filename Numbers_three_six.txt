@@ -1,0 +1,31 @@
+Number 3.)
+Student(StudentID(pk),fname,lname,dob,phone,parent_id,email,street,city,state,zip)
+
+
+Parent(ParentID(pk),fname,lname,email,phone,StudentID(fk),street,city,state,zip)
+
+
+Class(Class_id(pk),name,RoomNumber)
+
+
+attendance(date(pk),StudentID(fk),status,percentage,remarks)
+
+
+Teacher(teacherID(pk),email,fname,Class_id(fk),lname,dob,phone,status,street,city,state,zip)
+
+
+
+
+Number 6.)
+
+CREATE TABLE Student (StudentID int NOT NULL, fname VARCHAR2(255), lname VARCHAR2(255), dob DATE, Phone NUMBER, email VARCHAR2(255), ZIP NUMBER, PRIMARY KEY (StudentID), FOREIGN KEY (ZIP) REFERENCES Address(ZIP) ); 
+
+CREATE TABLE Parent(ParentID int NOT NULL, fname VARCHAR2(255), lname VARCHAR2(255), PhoneNumber NUMBER, email VARCHAR2(255), Zip NUMBER, PRIMARY KEY (ParentID), FOREIGN KEY (StudentID) REFERENCES Student(StudentID) FOREIGN KEY (zip) REFERENCES Address(ZIP));
+
+CREATE TABLE Class ( class_id int NOT NULL, name VARCHAR2(255), description VARCHAR2(255), PRIMARY KEY (Class_id), );
+
+CREATE TABLE Attendance ( Date date, StudentID int NOT NULL, status VARCHAR2(255), percentage NUMBER, remarks VARCHAR2(255), PRIMARY KEY (Date), FOREIGN KEY (StudentID) REFERENCES Student(StudentID)); 
+
+CREATE TABLE Teacher ( teacherID int NOT NULL, fname VARCHAR2(255), class_id int NOT NULL, dob DATE, PhoneNumber NUMBER, email VARCHAR2(255), ZIP NUMBER, PRIMARY KEY (teacherID) FOREIGN KEY (Class_id) REFERENCES class(Class_id) FOREIGN KEY (ZIP) REFERENCES Address(ZIP)); 
+
+CREATE TABLE Address ( ZIP number NOT NULL, street VARCHAR2(255), city VARCHAR2(255), state VARCHAR2(255), PRIMARY KEY (ZIP) FOREIGN KEY (class_id) REFERENCES class(Class_id) );
